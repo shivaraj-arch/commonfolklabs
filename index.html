@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commonfolk Labs — software for the ordinary citizen</title>
+<meta name="description" content="Commonfolk Labs builds tools that make everyday systems — language, courts, markets — legible to the people they affect.">
+<meta name="theme-color" content="#0f1115">
+<meta property="og:title" content="Commonfolk Labs">
+<meta property="og:description" content="Software for the ordinary citizen. Language, courts, markets.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://commonfolklabs.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1115'/%3E%3Cpath d='M9 21V11h2.6l2.4 6.2L16.4 11H19v10h-2.1v-6.4L14.7 21h-1.6l-2.2-6.4V21z' fill='%23e8b339'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#ffffff; --bg-2:#f6f7f9; --fg:#14161a; --fg-2:#5a6270;
+    --line:#e3e6ea; --accent:#a86b00; --accent-soft:#fdf5e6;
+    --max:64rem;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0f1115; --bg-2:#161920; --fg:#eef1f5; --fg-2:#98a1b0;
+      --line:#252a33; --accent:#e8b339; --accent-soft:#1d1e18;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1115; --bg-2:#161920; --fg:#eef1f5; --fg-2:#98a1b0;
+    --line:#252a33; --accent:#e8b339; --accent-soft:#1d1e18;
+  }
+  :root[data-theme="light"]{
+    --bg:#ffffff; --bg-2:#f6f7f9; --fg:#14161a; --fg-2:#5a6270;
+    --line:#e3e6ea; --accent:#a86b00; --accent-soft:#fdf5e6;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 1.5rem}
+
+  /* ---------- masthead ---------- */
+  header{padding:2rem 0 0}
+  .brandmark{
+    display:inline-flex; align-items:center; gap:.65rem;
+    font-weight:650; letter-spacing:-.01em; font-size:1rem;
+  }
+  .glyph{
+    width:1.75rem; height:1.75rem; border-radius:.45rem;
+    background:var(--fg); color:var(--bg);
+    display:grid; place-items:center;
+    font-weight:700; font-size:.9rem; letter-spacing:-.03em;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding:5.5rem 0 4.5rem; border-bottom:1px solid var(--line)}
+  h1{
+    margin:0 0 1.25rem; font-size:clamp(2.4rem,7vw,4rem);
+    line-height:1.04; letter-spacing:-.035em; font-weight:680;
+  }
+  .lede{
+    margin:0; font-size:clamp(1.1rem,2.4vw,1.3rem);
+    color:var(--fg-2); max-width:36ch; line-height:1.55;
+  }
+  .kicker{
+    display:inline-block; margin-bottom:1.75rem;
+    font-size:.775rem; font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--accent);
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:4.5rem 0; border-bottom:1px solid var(--line)}
+  .label{
+    font-size:.775rem; font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--fg-2); margin:0 0 2.25rem;
+  }
+  h2{
+    margin:0 0 1rem; font-size:1.35rem; letter-spacing:-.02em;
+    font-weight:650; line-height:1.3;
+  }
+
+  /* ---------- projects ---------- */
+  .projects{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:.9rem; overflow:hidden}
+  @media (min-width:52rem){ .projects{grid-template-columns:repeat(3,1fr)} }
+  .card{background:var(--bg); padding:2rem 1.75rem; display:flex; flex-direction:column; gap:.85rem}
+  .card h2{margin:0}
+  .native{
+    font-size:1.05rem; color:var(--accent); font-weight:600;
+    margin:-.35rem 0 0;
+  }
+  .card p{margin:0; color:var(--fg-2); font-size:.95rem; line-height:1.6}
+  .host{
+    margin-top:auto; padding-top:1rem;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.775rem; color:var(--fg-2); opacity:.75;
+  }
+  .host::before{content:"↳ "; opacity:.6}
+
+  /* ---------- principles ---------- */
+  .principles{display:grid; gap:2rem}
+  @media (min-width:44rem){ .principles{grid-template-columns:1fr 1fr; gap:2.5rem 3rem} }
+  .principle h2{font-size:1.05rem; margin:0 0 .4rem}
+  .principle p{margin:0; color:var(--fg-2); font-size:.95rem}
+
+  /* ---------- contact ---------- */
+  .contact{border-bottom:none}
+  .mail{
+    display:inline-block; margin-top:.5rem;
+    font-size:clamp(1.15rem,3.5vw,1.6rem); font-weight:600;
+    letter-spacing:-.02em; color:var(--fg);
+    text-decoration:none; border-bottom:2px solid var(--accent);
+    padding-bottom:.15rem;
+  }
+  .mail:hover{color:var(--accent)}
+  .place{margin:1.5rem 0 0; color:var(--fg-2); font-size:.95rem}
+
+  footer{
+    padding:2.5rem 0 3.5rem; border-top:1px solid var(--line);
+    color:var(--fg-2); font-size:.85rem;
+    display:flex; flex-wrap:wrap; gap:.5rem 1.5rem; justify-content:space-between;
+  }
+
+  a{color:var(--accent)}
+  @media (prefers-reduced-motion:no-preference){
+    .card,.mail{transition:background .15s ease,color .15s ease}
+    .card:hover{background:var(--bg-2)}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brandmark"><span class="glyph" aria-hidden="true">CL</span> Commonfolk&nbsp;Labs</div>
+  </header>
+
+  <div class="hero">
+    <span class="kicker">Bengaluru, India</span>
+    <h1>Software for the ordinary&nbsp;citizen.</h1>
+    <p class="lede">We build tools that make everyday systems — language, courts, markets — legible to the people they actually affect.</p>
+  </div>
+
+  <section>
+    <p class="label">What we build</p>
+    <div class="projects">
+
+      <article class="card">
+        <h2>Dani</h2>
+        <p class="native" lang="kn">ದನಿ</p>
+        <p>Real-time, two-way voice translation for ordinary phone calls. You speak your language, they hear theirs, in both directions — no app for the person on the other end to install.</p>
+        <p class="host">dani.commonfolklabs.com</p>
+      </article>
+
+      <article class="card">
+        <h2>Court Monitor</h2>
+        <p class="native">Karnataka High Court</p>
+        <p>Reads the court's own daily cause lists and turns them into a public dashboard — what was listed, what was actually heard, and where outcomes diverge between the state and everyone else. Public documents only.</p>
+        <p class="host">court.commonfolklabs.com</p>
+      </article>
+
+      <article class="card">
+        <h2>Market Briefs</h2>
+        <p class="native">Indian equities</p>
+        <p>Daily plain-language briefs on the Indian market, built so every claim carries the number and the source it came from. Written for someone with a job, not a terminal.</p>
+        <p class="host">finance.commonfolklabs.com</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <p class="label">How we build</p>
+    <div class="principles">
+      <div class="principle">
+        <h2>Deterministic core</h2>
+        <p>The facts come from parsing and arithmetic. Language models add explanation on top — never the substance. If the model is unavailable, the numbers still stand.</p>
+      </div>
+      <div class="principle">
+        <h2>Public sources only</h2>
+        <p>We read what is already published, and we read it without touching the systems that publish it. No scraping of live infrastructure, no private data.</p>
+      </div>
+      <div class="principle">
+        <h2>Cheap enough to keep running</h2>
+        <p>Built to run at near-zero cost on static delivery and scheduled jobs, so nothing depends on a funding round to stay online.</p>
+      </div>
+      <div class="principle">
+        <h2>One source of truth</h2>
+        <p>Web and mobile read the same generated output, so the two surfaces can never quietly disagree with each other.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <p class="label">Get in touch</p>
+    <a class="mail" href="mailto:admin@commonfolklabs.com">admin@commonfolklabs.com</a>
+    <p class="place">For press, partnerships, research collaboration, or anything about the projects above.</p>
+  </section>
+
+  <footer>
+    <span>Commonfolk Labs — Bengaluru, India</span>
+    <span>&copy; 2026</span>
+  </footer>
+</div>
+
+</body>
+</html>
