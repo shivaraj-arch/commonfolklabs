@@ -95,6 +95,28 @@
     color:var(--fg-2); border:1px solid var(--line);
     border-radius:.3rem; padding:.2rem .45rem; line-height:1.3;
   }
+
+  /* ---------- video facade (loads YouTube only on click) ---------- */
+  .promo,.promo-frame{
+    display:block; width:100%; max-width:168px; aspect-ratio:9/16;
+    border:1px solid var(--line); border-radius:.6rem;
+    background:var(--bg-2); overflow:hidden;
+  }
+  .promo{position:relative; margin:.35rem 0 0; cursor:pointer}
+  .promo img{width:100%; height:100%; object-fit:cover; display:block}
+  .promo .play{
+    position:absolute; inset:0; display:grid; place-items:center;
+    background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35));
+  }
+  .promo .play svg{
+    width:2.9rem; height:2.9rem; padding:.55rem; border-radius:50%;
+    background:rgba(20,22,26,.72); color:#fff;
+    backdrop-filter:blur(2px);
+  }
+  .promo:hover{border-color:var(--accent)}
+  .promo:hover .play svg{background:var(--accent); color:#14161a}
+  .promo:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .promo-frame{border:1px solid var(--line)}
   .links{
     margin-top:auto; padding-top:1.4rem;
     display:flex; flex-wrap:wrap; gap:.5rem;
@@ -148,7 +170,7 @@
   </header>
 
   <div class="hero">
-    <h1>Software for the ordinary&nbsp;citizen.</h1>
+    <h1>A citizen-centric&nbsp;lab.</h1>
     <p class="lede">We build tools that make everyday systems — language, courts, markets — legible to the people they actually affect.</p>
   </div>
 
@@ -158,8 +180,14 @@
 
       <article class="card">
         <h2>d̪ɐni</h2>
-        <p class="native" lang="kn">ದನಿ — “voice”</p>
+        <p class="native"><span lang="kn">ದನಿ</span> · real-time call translation</p>
         <p>A real-time voice translation app. On a live call each person speaks their own language and hears the other's, in both directions, as the call happens. You choose who you can call from inside the app — your phone's address book is never read.</p>
+        <a class="promo" href="https://www.youtube.com/shorts/h6bqu8SLhms" data-yt="h6bqu8SLhms" rel="noopener" aria-label="Play the d̪ɐni demo video">
+          <img src="dani-preview.jpg" alt="" width="342" height="760" loading="lazy" decoding="async">
+          <span class="play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+          </span>
+        </a>
         <ul class="tags">
           <li>Real-time voice translation</li>
           <li>In-app contacts</li>
@@ -198,7 +226,7 @@
 
       <article class="card">
         <h2>Nifty Analytica</h2>
-        <p class="native">NSE Nifty 50</p>
+        <p class="native">NSE Nifty 50 options &amp; market analytics</p>
         <p>An analytics dashboard for the NSE Nifty 50 — open interest, Black-Scholes option pricing, implied volatility, institutional flows and daily market snapshots, with an agent that reads the day and writes it up.</p>
         <ul class="tags">
           <li>Agent Market Analysis</li>
@@ -257,6 +285,25 @@
     <span>&copy; 2026</span>
   </footer>
 </div>
+
+<script>
+  // Progressive enhancement: the link works without JS; with JS it swaps
+  // in a privacy-mode embed on click, so nothing loads from YouTube until asked.
+  document.querySelectorAll('.promo').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      var f = document.createElement('iframe');
+      f.className = 'promo-frame';
+      f.src = 'https://www.youtube-nocookie.com/embed/' + el.dataset.yt +
+              '?autoplay=1&rel=0&playsinline=1';
+      f.title = 'd̪ɐni demo';
+      f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.setAttribute('allowfullscreen', '');
+      f.setAttribute('frameborder', '0');
+      el.replaceWith(f);
+    });
+  });
+</script>
 
 </body>
 </html>
