@@ -107,14 +107,14 @@
   <div class="hero">
     <p class="eyebrow">Design Lab · experimental</p>
     <h1>Describe it. We simulate it.</h1>
-    <p class="lede">State a digital-design requirement. The lab generates the HDL, runs it through an open-source simulator, and draws the circuit — automatically, on free CI. No Xilinx, no MATLAB, no licenses.</p>
+    <p class="lede">State a digital-design requirement. The lab generates the HDL, runs it through an open-source simulator, and draws the circuit — automatically, on free CI.</p>
   </div>
 
   <!-- HARNESS -->
   <form class="harness" id="harness" onsubmit="return submitDesign(event)">
     <div class="field full">
       <label for="req">Design requirement</label>
-      <textarea id="req" name="req">Washing-machine controller (finite-state machine). Four sequential states — HOT fill, DRAIN, COLD fill, DRAIN — advanced by level sensors. Inputs: clock, start, reset, full, empty. Outputs: hot, cold, drain, turn (agitate). Each state runs a timed down-counter; advance when the level sensor trips or the timer expires. Show both the sequential FSM behaviour and the concurrent counter / pulse-generator logic.</textarea>
+      <textarea id="req" name="req" placeholder="e.g. Washing-machine controller (finite-state machine). Four sequential states — HOT fill, DRAIN, COLD fill, DRAIN — advanced by level sensors. Inputs: clock, start, reset, full, empty. Outputs: hot, cold, drain, turn (agitate). Each state runs a timed down-counter; advance when the level sensor trips or the timer expires."></textarea>
     </div>
     <div class="row">
       <div class="field">
@@ -149,19 +149,23 @@
       </div>
     </div>
     <button class="submit" type="submit">Run the build →</button>
-    <p class="note">Submitting opens a pre-filled GitHub issue in the <code>commonfolk-design-lab</code> repo. The build (GHDL / Yosys / Icarus on GitHub Actions) picks it up, simulates, renders the waveform + schematic, and comments the results back. No credentials leave your browser.</p>
   </form>
 
   <p class="label">Worked examples</p>
   <div class="examples">
-    <article class="ex" id="ex-wm" onclick="openWM()" tabindex="0" role="button" aria-label="Open washing-machine example artifacts">
+    <article class="ex" onclick="openArt('washing-machine')" tabindex="0" role="button" aria-label="Open washing-machine example artifacts">
       <h3>Washing-machine synchronization</h3>
       <p>The classic sequential-plus-concurrent FSM: four timed states (hot / drain / cold / drain), level-sensor transitions, built from D/T flip-flops, pulse generators and down-counters. Real VHDL → simulated → drawn.</p>
       <div class="chips"><span>VHDL</span><span>GHDL</span><span>Yosys</span><span>FSM</span><span>sequential + concurrent</span></div>
     </article>
+    <article class="ex" onclick="openArt('counter')" tabindex="0" role="button" aria-label="Open Gray-code counter example artifacts">
+      <h3>2-bit Gray-code counter</h3>
+      <p>A plain-English requirement → Gemini-generated Verilog → simulated on Icarus → drawn by Yosys. The sequence 00 → 01 → 11 → 10 with a synchronous reset — generated, checked and rendered end-to-end.</p>
+      <div class="chips"><span>Verilog</span><span>Icarus</span><span>Yosys</span><span>Gemini-generated</span></div>
+    </article>
     <article class="ex ghost">
       <h3>Your design here</h3>
-      <p>Run the harness above with any requirement — a counter, a UART, an ALU, a traffic-light controller — and it lands here once the build finishes.</p>
+      <p>Run the harness above with any requirement — a UART, an ALU, a traffic-light controller — and it lands here once the build finishes.</p>
       <div class="chips"><span>coming from CI</span></div>
     </article>
   </div>
@@ -173,13 +177,13 @@
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="sheet">
     <button class="close" onclick="closeModal()" aria-label="Close">×</button>
-    <h2>Washing-machine synchronization</h2>
-    <p class="sub">Source: your VHDL (synchronizer + loadcount/wcounter + pulsegen/wtff/wdff) → GHDL simulation → Yosys schematic.</p>
+    <h2 id="m-title"></h2>
+    <p class="sub" id="m-sub"></p>
     <div id="art">
       <div class="cap">Circuit (RTL schematic)</div>
-      <img src="artifacts/washing-machine/schematic.svg" alt="RTL schematic" onerror="this.replaceWith(pending('schematic'))">
-      <div class="cap">Waveform (one wash cycle)</div>
-      <img src="artifacts/washing-machine/waveform.svg" alt="Simulation waveform" onerror="this.replaceWith(pending('waveform'))">
+      <img id="m-schem" src="" alt="RTL schematic" onerror="this.replaceWith(pending('schematic'))">
+      <div class="cap" id="m-wavecap">Waveform</div>
+      <img id="m-wave" src="" alt="Simulation waveform" onerror="this.replaceWith(pending('waveform'))">
     </div>
   </div>
 </div>
@@ -217,10 +221,28 @@
     d.textContent='The '+which+' hasn’t been generated into the site yet — it is produced by the GitHub Action and will appear here once committed.';
     return d;
   }
-  function openWM(){document.getElementById('modal').classList.add('open');}
+  var DESIGNS={
+    'washing-machine':{title:'Washing-machine synchronization',
+      sub:'Source: VHDL (synchronizer + loadcount/wcounter + pulsegen/wtff/wdff) → GHDL simulation → Yosys schematic.',
+      dir:'artifacts/washing-machine',wavecap:'Waveform (one wash cycle)'},
+    'counter':{title:'2-bit Gray-code counter',
+      sub:'Requirement → Gemini-generated Verilog → Icarus Verilog simulation → Yosys schematic. Generated end-to-end on CI.',
+      dir:'artifacts/counter',wavecap:'Waveform (00 → 01 → 11 → 10)'}
+  };
+  function openArt(id){
+    var d=DESIGNS[id]; if(!d) return;
+    document.getElementById('m-title').textContent=d.title;
+    document.getElementById('m-sub').textContent=d.sub;
+    document.getElementById('m-wavecap').textContent=d.wavecap;
+    document.getElementById('m-schem').src=d.dir+'/schematic.svg';
+    document.getElementById('m-wave').src=d.dir+'/waveform.svg';
+    document.getElementById('modal').classList.add('open');
+  }
   function closeModal(){document.getElementById('modal').classList.remove('open');}
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
-  document.getElementById('ex-wm').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openWM();}});
+  document.querySelectorAll('.ex[role=button]').forEach(function(el){
+    el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}});
+  });
 </script>
 </body>
 </html>
