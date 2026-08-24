@@ -181,9 +181,9 @@
     <p class="sub" id="m-sub"></p>
     <div id="art">
       <div class="cap">Circuit (RTL schematic)</div>
-      <img id="m-schem" src="" alt="RTL schematic" onerror="this.replaceWith(pending('schematic'))">
+      <img id="m-schem" alt="RTL schematic">
       <div class="cap" id="m-wavecap">Waveform</div>
-      <img id="m-wave" src="" alt="Simulation waveform" onerror="this.replaceWith(pending('waveform'))">
+      <img id="m-wave" alt="Simulation waveform">
     </div>
   </div>
 </div>
@@ -215,12 +215,6 @@
     return false;
   }
 
-  function pending(which){
-    var d=document.createElement('div');
-    d.className='pending';
-    d.textContent='The '+which+' hasn’t been generated into the site yet — it is produced by the GitHub Action and will appear here once committed.';
-    return d;
-  }
   var DESIGNS={
     'washing-machine':{title:'Washing-machine synchronization',
       sub:'Source: VHDL (synchronizer + loadcount/wcounter + pulsegen/wtff/wdff) → GHDL simulation → Yosys schematic.',
@@ -234,8 +228,11 @@
     document.getElementById('m-title').textContent=d.title;
     document.getElementById('m-sub').textContent=d.sub;
     document.getElementById('m-wavecap').textContent=d.wavecap;
-    document.getElementById('m-schem').src=d.dir+'/schematic.svg';
-    document.getElementById('m-wave').src=d.dir+'/waveform.svg';
+    var s=document.getElementById('m-schem'), w=document.getElementById('m-wave');
+    s.onerror=function(){this.removeAttribute('src');this.alt='Schematic not generated into the site yet.';};
+    w.onerror=function(){this.removeAttribute('src');this.alt='Waveform not generated into the site yet.';};
+    s.src=d.dir+'/schematic.svg';
+    w.src=d.dir+'/waveform.svg';
     document.getElementById('modal').classList.add('open');
   }
   function closeModal(){document.getElementById('modal').classList.remove('open');}
