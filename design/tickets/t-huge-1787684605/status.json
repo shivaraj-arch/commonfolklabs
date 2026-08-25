@@ -1,0 +1,26 @@
+{
+  "ticket": "t-huge-1787684605",
+  "state": "rejected",
+  "reason": "This request is far too complex for a single-module demo, as it asks for a multi-core CPU, cache hierarchy, and an entire operating system. Please scale down your request to a single digital component, such as a simple ALU, a cache controller, or a basic UART.",
+  "created_ist": "2026-08-26 00:34 IST",
+  "created_utc": "2026-08-25T19:04:51Z",
+  "prompt": "Design a complete 64-core out-of-order superscalar CPU with three levels of cache, a memory management unit, branch prediction, virtual memory, and a full operating system running on top of it.",
+  "inputs": {
+    "hdl": "verilog",
+    "sim": "iverilog",
+    "synth": "yes",
+    "target": "sim"
+  },
+  "result_url": "https://commonfolklabs.com/design/r/?t=t-huge-1787684605",
+  "public": "https://commonfolklabs.com/design/tickets/t-huge-1787684605",
+  "files": [
+    {
+      "name": "report.md",
+      "size": 281,
+      "url": "https://commonfolklabs.com/design/tickets/t-huge-1787684605/report.md"
+    }
+  ],
+  "total_size": 281,
+  "hdl": "verilog",
+  "sim": "iverilog"
+}

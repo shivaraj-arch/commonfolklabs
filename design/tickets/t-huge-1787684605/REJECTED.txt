@@ -1,0 +1,1 @@
+This request is far too complex for a single-module demo, as it asks for a multi-core CPU, cache hierarchy, and an entire operating system. Please scale down your request to a single digital component, such as a simple ALU, a cache controller, or a basic UART.
