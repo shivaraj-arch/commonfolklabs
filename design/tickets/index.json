@@ -1,0 +1,39 @@
+[
+  {
+    "ticket": "t-admin-1787680444",
+    "created_ist": "2026-08-25 23:24 IST",
+    "created_utc": "2026-08-25T17:54:59Z",
+    "prompt": "",
+    "inputs": {
+      "hdl": "vhdl",
+      "sim": "ghdl",
+      "synth": "yes",
+      "target": "cpld"
+    },
+    "result_url": "https://commonfolklabs.com/design/r/?t=t-admin-1787680444",
+    "public": "https://commonfolklabs.com/design/tickets/t-admin-1787680444",
+    "files": [
+      {
+        "name": "design.vhd",
+        "size": 3936,
+        "url": "https://commonfolklabs.com/design/tickets/t-admin-1787680444/design.vhd"
+      },
+      {
+        "name": "report.md",
+        "size": 74,
+        "url": "https://commonfolklabs.com/design/tickets/t-admin-1787680444/report.md"
+      },
+      {
+        "name": "schematic.svg",
+        "size": 83427,
+        "url": "https://commonfolklabs.com/design/tickets/t-admin-1787680444/schematic.svg"
+      },
+      {
+        "name": "waveform.svg",
+        "size": 8700,
+        "url": "https://commonfolklabs.com/design/tickets/t-admin-1787680444/waveform.svg"
+      }
+    ],
+    "total_size": 96137
+  }
+]
