@@ -1,0 +1,40 @@
+{
+  "ticket": "tmt8zuemh3ec91279c9",
+  "created_ist": "2026-08-25 23:58 IST",
+  "created_utc": "2026-08-25T18:28:12Z",
+  "prompt": "A 4-bit calculator (ALU): two 4-bit inputs a and b, and a 2-bit opcode op selecting add (00), subtract (01), bitwise AND (10), bitwise OR (11). Output the 4-bit result and a carry/borrow flag.",
+  "inputs": {
+    "hdl": "verilog",
+    "sim": "iverilog",
+    "synth": "yes",
+    "target": "sim"
+  },
+  "result_url": "https://commonfolklabs.com/design/r/?t=tmt8zuemh3ec91279c9",
+  "public": "https://commonfolklabs.com/design/tickets/tmt8zuemh3ec91279c9",
+  "files": [
+    {
+      "name": "design.v",
+      "size": 701,
+      "url": "https://commonfolklabs.com/design/tickets/tmt8zuemh3ec91279c9/design.v"
+    },
+    {
+      "name": "report.md",
+      "size": 1319,
+      "url": "https://commonfolklabs.com/design/tickets/tmt8zuemh3ec91279c9/report.md"
+    },
+    {
+      "name": "schematic.svg",
+      "size": 24564,
+      "url": "https://commonfolklabs.com/design/tickets/tmt8zuemh3ec91279c9/schematic.svg"
+    },
+    {
+      "name": "waveform.svg",
+      "size": 127564,
+      "url": "https://commonfolklabs.com/design/tickets/tmt8zuemh3ec91279c9/waveform.svg"
+    }
+  ],
+  "total_size": 154148,
+  "state": "done",
+  "hdl": "verilog",
+  "sim": "iverilog"
+}
