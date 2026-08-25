@@ -1,0 +1,31 @@
+{
+  "ticket": "t-e2e-1787674889",
+  "state": "done",
+  "hdl": "verilog",
+  "sim": "iverilog",
+  "prompt": "A 4-bit binary up-counter with clock and synchronous active-high reset; output the 4-bit count value.",
+  "created": "2026-08-25T16:25:25Z",
+  "expires": "2026-09-24T16:25:25Z",
+  "files": [
+    {
+      "name": "design.v",
+      "size": 273,
+      "url": "https://commonfolklabs.com/design/tickets/t-e2e-1787674889/design.v"
+    },
+    {
+      "name": "report.md",
+      "size": 680,
+      "url": "https://commonfolklabs.com/design/tickets/t-e2e-1787674889/report.md"
+    },
+    {
+      "name": "schematic.svg",
+      "size": 4738,
+      "url": "https://commonfolklabs.com/design/tickets/t-e2e-1787674889/schematic.svg"
+    },
+    {
+      "name": "waveform.svg",
+      "size": 30189,
+      "url": "https://commonfolklabs.com/design/tickets/t-e2e-1787674889/waveform.svg"
+    }
+  ]
+}
