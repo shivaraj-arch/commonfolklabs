@@ -212,7 +212,7 @@
 
   // Apps Script web-app URL that triggers the build (see apps-script/SETUP.md).
   var TRIGGER_URL = "https://script.google.com/macros/s/AKfycbxkb7LRCW36ugD0RdoybGklCyQ3SvrhXxFhzzqymLVEv7nALhME1GrstLUoi2av4-IDxA/exec";
-  var ENFORCE_SINGLE_JOB = false;         // FUTURE: true = one build at a time (freeze until done)
+  var ENFORCE_SINGLE_JOB = true;          // one build at a time (freeze until done)
   var busy = false;                       // in-memory only: refresh/close forgets it
 
   function newTicket(){
