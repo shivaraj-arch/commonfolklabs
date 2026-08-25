@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Design — Commonfolk Labs</title>
+<meta name="description" content="Your generated circuit and simulation from the Commonfolk Labs Design Lab.">
+<meta name="theme-color" content="#ff5a5f">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff5a5f'/%3E%3Cpath d='M9 21V11h2.6l2.4 6.2L16.4 11H19v10h-2.1v-6.4L14.7 21h-1.6l-2.2-6.4V21z' fill='white'/%3E%3C/svg%3E">
+<script>/* light is the default */(function(){try{var t=localStorage.getItem('cfl-theme');document.documentElement.setAttribute('data-theme',t||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<style>
+  :root{
+    --bg:#ffffff; --bg-2:#faf7fc; --fg:#191324; --fg-2:#6b6480;
+    --line:#eceaf3; --line-2:#e2def0;
+    --brand:#ff5a5f; --dani:#7c5cff;
+    --grad:linear-gradient(100deg,#ff5a5f 0%,#b45cff 48%,#2f9bff 100%);
+    --max:60rem;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --bg:#0c0a13; --bg-2:#141020; --fg:#f3effb; --fg-2:#a59ebd;
+    --line:#221d33; --line-2:#2c2542;
+    --brand:#ff7a7f; --dani:#9b83ff;
+    --grad:linear-gradient(100deg,#ff7a7f 0%,#c07bff 48%,#5cb3ff 100%);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0c0a13; --bg-2:#141020; --fg:#f3effb; --fg-2:#a59ebd;
+    --line:#221d33; --line-2:#2c2542;
+    --brand:#ff7a7f; --dani:#9b83ff;
+    --grad:linear-gradient(100deg,#ff7a7f 0%,#c07bff 48%,#5cb3ff 100%);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 1.5rem}
+  header.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 0 0;flex-wrap:wrap}
+  .brandmark{display:inline-flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.02rem;text-decoration:none;color:var(--fg)}
+  .glyph{width:1.85rem;height:1.85rem;border-radius:.5rem;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+  .topnav{display:flex;align-items:center;gap:1.05rem}
+  .topnav a{font-size:.9rem;font-weight:650;text-decoration:none;color:var(--fg-2)}
+  .topnav a:hover{color:var(--brand)}
+  .themebtn{width:2.1rem;height:2.1rem;border-radius:.55rem;padding:0;border:1px solid var(--line-2);background:var(--bg-2);color:var(--fg);display:grid;place-items:center;cursor:pointer}
+  .themebtn:hover{border-color:var(--brand);color:var(--brand)}
+  .themebtn svg{width:1.05rem;height:1.05rem}
+
+  .card{margin:2.4rem 0 3.4rem;padding:1.6rem;border:1px solid var(--line-2);border-radius:1.1rem;background:var(--bg-2)}
+  .eyebrow{margin:0 0 .8rem;font-size:.72rem;font-weight:750;letter-spacing:.14em;text-transform:uppercase;color:var(--brand)}
+  .rtitle{margin:.1rem 0 .3rem;font-size:1.5rem;line-height:1.25;letter-spacing:-.02em}
+  .rmeta{margin:.2rem 0;color:var(--fg-2);font-size:.9rem}
+  .cap{font-size:.75rem;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);margin:1.3rem 0 .4rem}
+  img.art{width:100%;height:auto;background:#fff;border:1px solid var(--line-2);border-radius:.6rem}
+  .files{list-style:none;padding:0;margin:.3rem 0 0}
+  .files li{padding:.25rem 0}
+  .files a{color:var(--brand);font-weight:600;text-decoration:none}
+  .files .sz{color:var(--fg-2);font-size:.8rem;margin-left:.4rem}
+  .spin{display:inline-block;width:1rem;height:1rem;margin-right:.55rem;border:2px solid var(--line-2);border-top-color:var(--brand);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .back{display:inline-block;margin-top:1.4rem;color:var(--brand);font-weight:650;text-decoration:none}
+  .tid{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;color:var(--fg-2)}
+  footer{padding:2.2rem 0 3rem;border-top:1px solid var(--line);color:var(--fg-2);font-size:.85rem;text-align:center}
+  a{color:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brandmark" href="/"><span class="glyph" aria-hidden="true">CL</span> Commonfolk&nbsp;Labs</a>
+    <nav class="topnav">
+      <a href="/">Home</a>
+      <a href="/design/">Design&nbsp;Lab</a>
+      <button id="themebtn" class="themebtn" type="button" aria-label="Switch light or dark theme"></button>
+    </nav>
+  </header>
+
+  <div class="card" id="out">
+    <p class="eyebrow">Design Lab</p>
+    <h1 class="rtitle"><span class="spin"></span>Preparing…</h1>
+  </div>
+
+  <footer>Commonfolk Labs · Design Lab &copy; 2026</footer>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement,btn=document.getElementById('themebtn');
+    var sun='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
+    var moon='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+    function cur(){return root.getAttribute('data-theme')||'light';}
+    function paint(){if(btn)btn.innerHTML=cur()==='dark'?sun:moon;}
+    if(btn)btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('cfl-theme',n);}catch(e){}paint();});
+    paint();
+  })();
+
+  var out=document.getElementById('out');
+  var ticket=new URLSearchParams(location.search).get('t')||'';
+  var timer=null, tries=0;
+
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function fmtSize(b){ if(b<1024)return b+' B'; if(b<1048576)return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
+  function fmtDate(iso){ try{var d=new Date(iso);return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});}catch(e){return iso;} }
+  function capOf(n){ if(n==='schematic.svg')return 'Circuit (RTL schematic)'; if(n==='waveform.svg')return 'Waveform'; return n; }
+
+  function building(){
+    out.innerHTML='<p class="eyebrow">Design Lab</p>'
+      +'<h1 class="rtitle"><span class="spin"></span>Your design is building…</h1>'
+      +'<p class="rmeta">This usually takes 2–4 minutes. Keep this page open — it refreshes on its own — '
+      +'or <strong>bookmark it</strong> and come back; your circuit and waveform will appear here and stay for about a month.</p>'
+      +'<p class="tid">ticket: '+esc(ticket)+'</p>'
+      +'<p><a class="back" href="../">← Run another design</a></p>';
+  }
+
+  function render(s){
+    if(timer){clearTimeout(timer);}
+    var files=s.files||[];
+    var svgs=files.filter(function(f){return /\.svg$/i.test(f.name);});
+    var others=files.filter(function(f){return !/\.svg$/i.test(f.name);});
+    var h='<p class="eyebrow">Design Lab · result</p>';
+    h+='<h1 class="rtitle">'+(s.prompt?esc(s.prompt.slice(0,140)):'Your design')+'</h1>';
+    var meta=[]; if(s.hdl)meta.push(esc(s.hdl.toUpperCase())); if(s.sim)meta.push(esc(s.sim));
+    meta.push('generated &amp; simulated on open-source CI');
+    h+='<p class="rmeta">'+meta.join(' · ')+'</p>';
+    svgs.forEach(function(f){ h+='<div class="cap">'+esc(capOf(f.name))+'</div><img class="art" src="'+esc(f.url)+'" alt="'+esc(capOf(f.name))+'">'; });
+    if(others.length){
+      h+='<div class="cap">Files</div><ul class="files">';
+      others.forEach(function(f){ h+='<li><a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.name)+'</a><span class="sz">'+fmtSize(f.size)+'</span></li>'; });
+      h+='</ul>';
+    }
+    if(s.expires){ h+='<p class="rmeta">Available until '+esc(fmtDate(s.expires))+'. Bookmark this page to keep the link.</p>'; }
+    h+='<p><a class="back" href="../">← Run another design</a></p>';
+    out.innerHTML=h;
+  }
+
+  function poll(){
+    fetch('../tickets/'+encodeURIComponent(ticket)+'/status.json?cb='+Date.now())
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(s){ if(s&&s.state==='done'){ render(s); } else { throw 0; } })
+      .catch(function(){ tries++; timer=setTimeout(poll, tries<20?8000:20000); });
+  }
+
+  if(!ticket){
+    out.innerHTML='<p class="eyebrow">Design Lab</p><h1 class="rtitle">No design ticket</h1>'
+      +'<p class="rmeta">This link is missing its ticket id.</p>'
+      +'<p><a class="back" href="../">← Go to the Design Lab</a></p>';
+  } else {
+    building();
+    poll();
+  }
+</script>
+</body>
+</html>

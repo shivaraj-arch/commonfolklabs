@@ -64,6 +64,15 @@
   .note{margin:.9rem 0 0;font-size:.82rem;color:var(--fg-2);text-align:left}
   .note code{background:var(--bg);border:1px solid var(--line-2);border-radius:.3rem;padding:.05rem .3rem;font-size:.9em}
 
+  .panel{margin:1.1rem 0 3rem;padding:1.2rem 1.3rem;border-radius:.9rem;border:1px solid var(--line-2);background:var(--bg-2);text-align:left}
+  .panel strong{color:var(--fg)}
+  .panel.frozen{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 8%,var(--bg-2))}
+  .panel .small{margin-top:.6rem;font-size:.8rem;color:var(--fg-2)}
+  .panel .resultlink{display:inline-block;margin-top:.8rem;font-weight:700;color:#fff;background:var(--grad);border-radius:.6rem;padding:.6rem 1.1rem;text-decoration:none;box-shadow:0 8px 22px -10px var(--brand)}
+  .panel .resultlink:hover{filter:brightness(1.05)}
+  .panel .spin{display:inline-block;width:.9rem;height:.9rem;margin-right:.5rem;border:2px solid var(--line-2);border-top-color:var(--brand);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-1px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
   .label{font-size:.775rem;font-weight:750;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin:2.5rem 0 1.6rem;text-align:center}
   .examples{display:grid;gap:1.1rem;grid-template-columns:1fr}
   @media(min-width:44rem){.examples{grid-template-columns:repeat(2,1fr)}}
@@ -151,6 +160,8 @@
     <button class="submit" type="submit">Run the build →</button>
   </form>
 
+  <div id="panel" class="panel" hidden></div>
+
   <p class="label">Worked examples</p>
   <div class="examples">
     <article class="ex" onclick="openArt('washing-machine')" tabindex="0" role="button" aria-label="Open washing-machine example artifacts">
@@ -199,19 +210,66 @@
     paint();
   })();
 
-  var REPO='shivaraj-arch/commonfolk-design-lab';
-  function submitDesign(e){
+  // Apps Script web-app URL that triggers the build (see apps-script/SETUP.md).
+  var TRIGGER_URL = "PASTE_APPS_SCRIPT_WEB_APP_URL_HERE";
+  var busy = false;                       // in-memory only: refresh/close forgets it
+
+  function newTicket(){
+    var s='';
+    try{ var a=new Uint8Array(8); crypto.getRandomValues(a);
+         for(var i=0;i<a.length;i++){ s+=('0'+a[i].toString(16)).slice(-2); } }
+    catch(e){ s=Math.random().toString(16).slice(2,18); }
+    return 't'+Date.now().toString(36)+s.slice(0,10);
+  }
+  function setForm(disabled){
+    document.querySelectorAll('#harness textarea, #harness select, #harness button')
+      .forEach(function(el){ el.disabled=disabled; });
+  }
+  function panel(html, cls){
+    var p=document.getElementById('panel');
+    p.className='panel'+(cls?(' '+cls):''); p.innerHTML=html; p.hidden=false;
+  }
+  function freeze(){
+    setForm(true);
+    panel('<strong>Pipeline is rate limited.</strong> The Design Lab runs one build at a time. '
+      +'Please wait until the current job finishes, then <a href="./">refresh this page</a> to submit again.',
+      'frozen');
+  }
+  function showQueued(url){
+    setForm(true);
+    panel('<strong>Build queued.</strong> Your diagrams will appear on your result page — '
+      +'<em>bookmark it</em>; it stays live for about a month.'
+      +'<br><a class="resultlink" href="'+url+'">Open your result page →</a>'
+      +'<div class="small">One build runs at a time. Refresh this page to start another once it finishes.</div>');
+  }
+
+  async function submitDesign(e){
     e.preventDefault();
-    var req=document.getElementById('req').value.trim();
+    if(busy){ freeze(); return false; }
+    if(TRIGGER_URL.indexOf('PASTE_')===0){
+      panel('<strong>Not configured yet.</strong> The trigger endpoint hasn’t been set. '
+        +'See <code>apps-script/SETUP.md</code>.','frozen');
+      return false;
+    }
+    var prompt=document.getElementById('req').value.trim();
     var hdl=document.getElementById('hdl').value, sim=document.getElementById('sim').value;
     var synth=document.getElementById('synth').value, target=document.getElementById('target').value;
-    var title='Design request: '+req.slice(0,60).replace(/\s+/g,' ');
-    var body='### Design request\n\n'+req+'\n\n'
-      +'| setting | value |\n|---|---|\n'
-      +'| HDL | '+hdl+' |\n| Simulator | '+sim+' |\n| Schematic (Yosys) | '+synth+' |\n| Target | '+target+' |\n\n'
-      +'<!-- design-lab: hdl='+hdl+'; sim='+sim+'; synth='+synth+'; target='+target+' -->';
-    var url='https://github.com/'+REPO+'/issues/new?labels=design-request&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
-    window.open(url,'_blank','noopener');
+    var ticket=newTicket();
+    var payload={ticket:ticket,prompt:prompt,hdl:hdl,sim:sim,synth:synth,target:target};
+
+    setForm(true);
+    panel('<span class="spin"></span>Submitting your design…');
+
+    var status='queued';
+    try{
+      var r=await fetch(TRIGGER_URL,{method:'POST',body:JSON.stringify(payload)});
+      try{ var d=await r.json(); if(d&&d.status){status=d.status;} if(d&&d.ticket){ticket=d.ticket;} }
+      catch(_){ /* response not readable (CORS) — POST was still delivered */ }
+    }catch(_){ /* network/CORS — assume the POST reached the proxy */ }
+
+    if(status==='busy'){ freeze(); return false; }
+    busy=true;
+    showQueued('r/?t='+encodeURIComponent(ticket));
     return false;
   }
 

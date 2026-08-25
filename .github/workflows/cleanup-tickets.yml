@@ -1,0 +1,57 @@
+name: cleanup-design-tickets
+
+# Prune Design Lab result folders older than ~30 days.
+on:
+  schedule:
+    - cron: "17 3 * * *"      # daily, 03:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Remove expired tickets
+        run: |
+          python3 - <<'PY'
+          import os, json, glob, shutil, datetime
+          root = "design/tickets"
+          if not os.path.isdir(root):
+              raise SystemExit(0)
+          now = datetime.datetime.utcnow()
+          removed = []
+          for d in glob.glob(os.path.join(root, "*")):
+              if not os.path.isdir(d):
+                  continue
+              created = None
+              sp = os.path.join(d, "status.json")
+              if os.path.exists(sp):
+                  try:
+                      created = json.load(open(sp)).get("created")
+                  except Exception:
+                      created = None
+              old = False
+              if created:
+                  try:
+                      c = datetime.datetime.fromisoformat(created.replace("Z", ""))
+                      old = (now - c).days >= 30
+                  except Exception:
+                      old = False
+              else:
+                  # no status.json yet: only prune if the folder is very old
+                  mtime = datetime.datetime.utcfromtimestamp(os.path.getmtime(d))
+                  old = (now - mtime).days >= 31
+              if old:
+                  shutil.rmtree(d)
+                  removed.append(os.path.basename(d))
+          print("removed:", removed)
+          PY
+          git config user.name  "cleanup-bot"
+          git config user.email "bot@commonfolklabs.com"
+          git add -A design/tickets 2>/dev/null || true
+          git commit -m "prune expired design tickets" || echo "nothing to prune"
+          git push || echo "nothing to push"
