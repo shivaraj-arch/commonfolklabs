@@ -58,6 +58,8 @@
   .tot{font-weight:700;white-space:nowrap}
   .go{color:#fff;background:var(--grad);border-radius:.4rem;padding:.25rem .55rem;text-decoration:none;font-weight:700;font-size:.78rem;white-space:nowrap}
   .empty{padding:2rem;color:var(--fg-2);text-align:center}
+  .rejtag{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--brand);border-radius:.35rem;padding:.05rem .35rem;margin-right:.35rem}
+  tr.rej td{background:color-mix(in srgb,var(--brand) 6%,transparent)}
   a{color:var(--brand)}
   footer{padding:2.2rem 0 3rem;color:var(--fg-2);font-size:.85rem;text-align:center;margin-top:2rem;border-top:1px solid var(--line)}
 </style>
@@ -127,10 +129,12 @@
       var total=0;
       rows.innerHTML=items.map(function(it){
         total+=(it.total_size||0);
+        var rej=it.state==='rejected';
         var p=esc((it.prompt||'').slice(0,160))||'<em>(washing-machine reference)</em>';
-        return '<tr>'
+        if(rej) p='<span class="rejtag">rejected</span> '+p;
+        return '<tr'+(rej?' class="rej"':'')+'>'
           +'<td>'+esc(it.created_ist||it.created_utc||'')+'</td>'
-          +'<td class="prompt" title="'+esc(it.prompt||'')+'">'+p+'</td>'
+          +'<td class="prompt" title="'+esc(rej?(it.reason||'rejected'):(it.prompt||''))+'">'+p+'</td>'
           +'<td class="chips">'+chips(it.inputs)+'</td>'
           +'<td class="files">'+fileList(it.files)+'</td>'
           +'<td class="tot">'+fmtSize(it.total_size)+'</td>'
