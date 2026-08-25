@@ -1,0 +1,3 @@
+# Rejected
+
+This request is far too complex for a single-module HDL demo as it requires an entire smartphone SoC and an operating system. Please request a specific, small-scale digital logic component such as a UART, ALU, counter, or simple FSM instead.

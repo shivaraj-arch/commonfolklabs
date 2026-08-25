@@ -1,5 +1,29 @@
 [
   {
+    "ticket": "t-huge2-1787684987",
+    "state": "rejected",
+    "reason": "This request is far too complex for a single-module HDL demo as it requires an entire smartphone SoC and an operating system. Please request a specific, small-scale digital logic component such as a UART, ALU, counter, or simple FSM instead.",
+    "created_ist": "2026-08-26 00:41 IST",
+    "created_utc": "2026-08-25T19:11:10Z",
+    "prompt": "Build an entire smartphone system on chip including the application processor, GPU, cellular modem, image signal processor, and Android operating system.",
+    "inputs": {
+      "hdl": "verilog",
+      "sim": "iverilog",
+      "synth": "yes",
+      "target": "sim"
+    },
+    "result_url": "https://commonfolklabs.com/design/r/?t=t-huge2-1787684987",
+    "public": "https://commonfolklabs.com/design/tickets/t-huge2-1787684987",
+    "files": [
+      {
+        "name": "report.md",
+        "size": 254,
+        "url": "https://commonfolklabs.com/design/tickets/t-huge2-1787684987/report.md"
+      }
+    ],
+    "total_size": 254
+  },
+  {
     "ticket": "t-huge-1787684605",
     "state": "rejected",
     "reason": "This request is far too complex for a single-module demo, as it asks for a multi-core CPU, cache hierarchy, and an entire operating system. Please scale down your request to a single digital component, such as a simple ALU, a cache controller, or a basic UART.",
