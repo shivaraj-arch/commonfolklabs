@@ -110,6 +110,14 @@
 
   function render(s){
     if(timer){clearTimeout(timer);}
+    if(s.state==='rejected'){
+      out.innerHTML='<p class="eyebrow">Design Lab · result</p>'
+        +'<h1 class="rtitle">Request not accepted</h1>'
+        +'<p class="rmeta">'+esc(s.reason||'This request could not be turned into a digital design.')+'</p>'
+        +(s.prompt?'<p class="rmeta">You entered: &ldquo;'+esc(s.prompt.slice(0,200))+'&rdquo;</p>':'')
+        +'<p><a class="back" href="../">← Try another design</a></p>';
+      return;
+    }
     var files=s.files||[];
     var svgs=files.filter(function(f){return /\.svg$/i.test(f.name);});
     var others=files.filter(function(f){return !/\.svg$/i.test(f.name);});
@@ -133,7 +141,7 @@
   function poll(){
     fetch('../tickets/'+encodeURIComponent(ticket)+'/status.json?cb='+Date.now())
       .then(function(r){ if(!r.ok) throw 0; return r.json(); })
-      .then(function(s){ if(s&&s.state==='done'){ render(s); } else { throw 0; } })
+      .then(function(s){ if(s&&(s.state==='done'||s.state==='rejected')){ render(s); } else { throw 0; } })
       .catch(function(){ tries++; timer=setTimeout(poll, tries<20?8000:20000); });
   }
 

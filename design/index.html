@@ -304,6 +304,19 @@
     setForm(false);
   }
 
+  function validatePrompt(p){
+    p=(p||'').trim();
+    if(!p) return 'Please describe a design first — e.g. “a 4-bit counter with synchronous reset”.';
+    if(p.length<12) return 'Add a bit more detail about the circuit you want.';
+    var words=p.split(/\s+/).filter(function(w){return /[a-z]{2,}/i.test(w);});
+    if(words.length<3) return 'That doesn’t look like a design description — try e.g. “a traffic-light controller FSM”.';
+    var letters=(p.match(/[a-z]/gi)||[]).length;
+    if(letters/p.length < 0.5) return 'That doesn’t look like a design description — please use plain words.';
+    var vowels=(p.match(/[aeiou]/gi)||[]).length;
+    if(letters && vowels/letters < 0.2) return 'That doesn’t look like real words — please describe the circuit in plain English.';
+    return null;
+  }
+
   async function submitDesign(e){
     e.preventDefault();
     if(watching){ return false; }
@@ -312,6 +325,8 @@
         +'See <code>apps-script/SETUP.md</code>.','frozen');
       return false;
     }
+    var verr=validatePrompt(document.getElementById('req').value);
+    if(verr){ panel('<strong>Check your input.</strong> '+verr,'frozen'); document.getElementById('req').focus(); return false; }
     var prompt=document.getElementById('req').value.trim();
     var hdl=document.getElementById('hdl').value, sim=document.getElementById('sim').value;
     var synth=document.getElementById('synth').value, target=document.getElementById('target').value;
