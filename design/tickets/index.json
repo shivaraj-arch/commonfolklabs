@@ -1,5 +1,44 @@
 [
   {
+    "ticket": "t-cd-1787685984",
+    "state": "done",
+    "reason": "",
+    "created_ist": "2026-08-26 00:58 IST",
+    "created_utc": "2026-08-25T19:28:17Z",
+    "prompt": "A 3-bit up-down counter with clock, direction input, and synchronous reset.",
+    "inputs": {
+      "hdl": "verilog",
+      "sim": "iverilog",
+      "synth": "yes",
+      "target": "sim"
+    },
+    "result_url": "https://commonfolklabs.com/design/r/?t=t-cd-1787685984",
+    "public": "https://commonfolklabs.com/design/tickets/t-cd-1787685984",
+    "files": [
+      {
+        "name": "design.v",
+        "size": 437,
+        "url": "https://commonfolklabs.com/design/tickets/t-cd-1787685984/design.v"
+      },
+      {
+        "name": "report.md",
+        "size": 1205,
+        "url": "https://commonfolklabs.com/design/tickets/t-cd-1787685984/report.md"
+      },
+      {
+        "name": "schematic.svg",
+        "size": 7039,
+        "url": "https://commonfolklabs.com/design/tickets/t-cd-1787685984/schematic.svg"
+      },
+      {
+        "name": "waveform.svg",
+        "size": 23402,
+        "url": "https://commonfolklabs.com/design/tickets/t-cd-1787685984/waveform.svg"
+      }
+    ],
+    "total_size": 32083
+  },
+  {
     "ticket": "t-valid-1787685127",
     "state": "done",
     "reason": "",
