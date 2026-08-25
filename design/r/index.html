@@ -111,6 +111,13 @@
 
   function render(s){
     if(timer){clearTimeout(timer);}
+    if(s.state==='unavailable'){
+      out.innerHTML='<p class="eyebrow">Design Lab · result</p>'
+        +'<h1 class="rtitle">Temporarily unavailable</h1>'
+        +'<div class="reason">'+esc(s.reason||'The design service was busy. Please try again shortly.')+'</div>'
+        +'<p><a class="back" href="../">← Try again</a></p>';
+      return;
+    }
     if(s.state==='rejected'){
       out.innerHTML='<p class="eyebrow">Design Lab · result</p>'
         +'<h1 class="rtitle">Request not accepted</h1>'
@@ -143,7 +150,7 @@
   function poll(){
     fetch('../tickets/'+encodeURIComponent(ticket)+'/status.json?cb='+Date.now())
       .then(function(r){ if(!r.ok) throw 0; return r.json(); })
-      .then(function(s){ if(s&&(s.state==='done'||s.state==='rejected')){ render(s); } else { throw 0; } })
+      .then(function(s){ if(s&&(s.state==='done'||s.state==='rejected'||s.state==='unavailable')){ render(s); } else { throw 0; } })
       .catch(function(){ tries++; timer=setTimeout(poll, tries<20?8000:20000); });
   }
 

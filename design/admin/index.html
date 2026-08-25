@@ -129,12 +129,12 @@
       var total=0;
       rows.innerHTML=items.map(function(it){
         total+=(it.total_size||0);
-        var rej=it.state==='rejected';
+        var bad=it.state && it.state!=='done';
         var p=esc((it.prompt||'').slice(0,160))||'<em>(washing-machine reference)</em>';
-        if(rej) p='<span class="rejtag">rejected</span> '+p;
-        return '<tr'+(rej?' class="rej"':'')+'>'
+        if(bad) p='<span class="rejtag">'+esc(it.state)+'</span> '+p;
+        return '<tr'+(bad?' class="rej"':'')+'>'
           +'<td>'+esc(it.created_ist||it.created_utc||'')+'</td>'
-          +'<td class="prompt" title="'+esc(rej?(it.reason||'rejected'):(it.prompt||''))+'">'+p+'</td>'
+          +'<td class="prompt" title="'+esc(bad?(it.reason||it.state):(it.prompt||''))+'">'+p+'</td>'
           +'<td class="chips">'+chips(it.inputs)+'</td>'
           +'<td class="files">'+fileList(it.files)+'</td>'
           +'<td class="tot">'+fmtSize(it.total_size)+'</td>'
