@@ -103,7 +103,7 @@
     out.innerHTML='<p class="eyebrow">Design Lab</p>'
       +'<h1 class="rtitle"><span class="spin"></span>Your design is building…</h1>'
       +'<p class="rmeta">This usually takes 2–4 minutes. Keep this page open — it refreshes on its own — '
-      +'or <strong>bookmark it</strong> and come back; your circuit and waveform will appear here and stay for about a month.</p>'
+      +'or <strong>bookmark it</strong> and come back; your circuit and waveform will appear here and stay saved.</p>'
       +'<p class="tid">ticket: '+esc(ticket)+'</p>'
       +'<p><a class="back" href="../">← Run another design</a></p>';
   }
@@ -124,7 +124,8 @@
       others.forEach(function(f){ h+='<li><a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.name)+'</a><span class="sz">'+fmtSize(f.size)+'</span></li>'; });
       h+='</ul>';
     }
-    if(s.expires){ h+='<p class="rmeta">Available until '+esc(fmtDate(s.expires))+'. Bookmark this page to keep the link.</p>'; }
+    if(s.created_ist){ h+='<p class="rmeta">Generated '+esc(s.created_ist)+'. Saved — bookmark this page to keep the link.</p>'; }
+    else { h+='<p class="rmeta">Saved — bookmark this page to keep the link.</p>'; }
     h+='<p><a class="back" href="../">← Run another design</a></p>';
     out.innerHTML=h;
   }

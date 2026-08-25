@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Lab Admin — Commonfolk Labs</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ff5a5f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff5a5f'/%3E%3Cpath d='M9 21V11h2.6l2.4 6.2L16.4 11H19v10h-2.1v-6.4L14.7 21h-1.6l-2.2-6.4V21z' fill='white'/%3E%3C/svg%3E">
+<script>/* light is the default */(function(){try{var t=localStorage.getItem('cfl-theme');document.documentElement.setAttribute('data-theme',t||'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<style>
+  :root{
+    --bg:#ffffff; --bg-2:#faf7fc; --fg:#191324; --fg-2:#6b6480;
+    --line:#eceaf3; --line-2:#e2def0;
+    --brand:#ff5a5f; --dani:#7c5cff;
+    --grad:linear-gradient(100deg,#ff5a5f 0%,#b45cff 48%,#2f9bff 100%);
+    --max:80rem;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --bg:#0c0a13; --bg-2:#141020; --fg:#f3effb; --fg-2:#a59ebd;
+    --line:#221d33; --line-2:#2c2542; --brand:#ff7a7f; --dani:#9b83ff;
+    --grad:linear-gradient(100deg,#ff7a7f 0%,#c07bff 48%,#5cb3ff 100%);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0c0a13; --bg-2:#141020; --fg:#f3effb; --fg-2:#a59ebd;
+    --line:#221d33; --line-2:#2c2542; --brand:#ff7a7f; --dani:#9b83ff;
+    --grad:linear-gradient(100deg,#ff7a7f 0%,#c07bff 48%,#5cb3ff 100%);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 1.5rem}
+  header.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.3rem 0 0;flex-wrap:wrap}
+  .brandmark{display:inline-flex;align-items:center;gap:.6rem;font-weight:700;font-size:1.02rem;text-decoration:none;color:var(--fg)}
+  .glyph{width:1.85rem;height:1.85rem;border-radius:.5rem;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+  .topnav{display:flex;align-items:center;gap:1.05rem}
+  .topnav a{font-size:.9rem;font-weight:650;text-decoration:none;color:var(--fg-2)}
+  .topnav a:hover{color:var(--brand)}
+  .themebtn{width:2.1rem;height:2.1rem;border-radius:.55rem;padding:0;border:1px solid var(--line-2);background:var(--bg-2);color:var(--fg);display:grid;place-items:center;cursor:pointer}
+  .themebtn:hover{border-color:var(--brand);color:var(--brand)}
+  .themebtn svg{width:1.05rem;height:1.05rem}
+
+  h1{margin:1.8rem 0 .3rem;font-size:1.7rem;letter-spacing:-.02em}
+  .sub{color:var(--fg-2);margin:0 0 1rem;font-size:.9rem}
+  .summary{display:flex;gap:1.4rem;flex-wrap:wrap;margin:1rem 0 1.4rem;padding:1rem 1.2rem;border:1px solid var(--line-2);border-radius:.8rem;background:var(--bg-2)}
+  .summary b{font-size:1.3rem;display:block}
+  .summary span{color:var(--fg-2);font-size:.8rem}
+  .warn{font-size:.82rem;color:var(--fg-2);border-left:3px solid var(--brand);padding:.3rem 0 .3rem .7rem;margin:0 0 1.4rem}
+
+  .tablewrap{overflow-x:auto;border:1px solid var(--line-2);border-radius:.8rem}
+  table{border-collapse:collapse;width:100%;min-width:60rem;font-size:.86rem}
+  th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--bg-2);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);position:sticky;top:0}
+  tr:last-child td{border-bottom:none}
+  .prompt{max-width:22rem}
+  .chips span{display:inline-block;font-size:.66rem;font-weight:700;color:var(--dani);background:color-mix(in srgb,var(--dani) 12%,transparent);border:1px solid color-mix(in srgb,var(--dani) 30%,transparent);border-radius:.4rem;padding:.08rem .4rem;margin:0 .2rem .2rem 0;white-space:nowrap}
+  .files a{display:block;color:var(--brand);text-decoration:none;white-space:nowrap}
+  .files .sz{color:var(--fg-2)}
+  .tot{font-weight:700;white-space:nowrap}
+  .go{color:#fff;background:var(--grad);border-radius:.4rem;padding:.25rem .55rem;text-decoration:none;font-weight:700;font-size:.78rem;white-space:nowrap}
+  .empty{padding:2rem;color:var(--fg-2);text-align:center}
+  a{color:var(--brand)}
+  footer{padding:2.2rem 0 3rem;color:var(--fg-2);font-size:.85rem;text-align:center;margin-top:2rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brandmark" href="/"><span class="glyph" aria-hidden="true">CL</span> Commonfolk&nbsp;Labs</a>
+    <nav class="topnav">
+      <a href="/">Home</a>
+      <a href="/design/">Design&nbsp;Lab</a>
+      <button id="themebtn" class="themebtn" type="button" aria-label="Switch light or dark theme"></button>
+    </nav>
+  </header>
+
+  <h1>Design Lab — Admin</h1>
+  <p class="sub">Every build: time (IST), prompt, inputs, and all outputs with sizes.</p>
+  <p class="warn">This page is not access-controlled yet — it reads a public index. Access control + plans are planned. Don't link it publicly for now.</p>
+
+  <div class="summary" id="summary" hidden>
+    <div><b id="s-count">0</b><span>designs</span></div>
+    <div><b id="s-size">0</b><span>total stored</span></div>
+    <div><b id="s-latest">—</b><span>latest (IST)</span></div>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th>Time (IST)</th><th>Prompt</th><th>Inputs</th><th>Outputs</th><th>Total</th><th>Result</th>
+      </tr></thead>
+      <tbody id="rows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+    </table>
+  </div>
+
+  <footer>Commonfolk Labs · Design Lab Admin &copy; 2026</footer>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement,btn=document.getElementById('themebtn');
+    var sun='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>';
+    var moon='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+    function cur(){return root.getAttribute('data-theme')||'light';}
+    function paint(){if(btn)btn.innerHTML=cur()==='dark'?sun:moon;}
+    if(btn)btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('cfl-theme',n);}catch(e){}paint();});
+    paint();
+  })();
+
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function fmtSize(b){ b=b||0; if(b<1024)return b+' B'; if(b<1048576)return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(2)+' MB'; }
+
+  function chips(inp){
+    inp=inp||{}; var out='';
+    ['hdl','sim','synth','target'].forEach(function(k){ if(inp[k]) out+='<span>'+esc(k)+': '+esc(inp[k])+'</span>'; });
+    return out||'—';
+  }
+  function fileList(files){
+    if(!files||!files.length) return '—';
+    return files.map(function(f){ return '<a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.name)+' <span class="sz">('+fmtSize(f.size)+')</span></a>'; }).join('');
+  }
+
+  fetch('../tickets/index.json?cb='+Date.now())
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(items){
+      var rows=document.getElementById('rows');
+      if(!items||!items.length){ rows.innerHTML='<tr><td colspan="6" class="empty">No designs yet.</td></tr>'; return; }
+      var total=0;
+      rows.innerHTML=items.map(function(it){
+        total+=(it.total_size||0);
+        var p=esc((it.prompt||'').slice(0,160))||'<em>(washing-machine reference)</em>';
+        return '<tr>'
+          +'<td>'+esc(it.created_ist||it.created_utc||'')+'</td>'
+          +'<td class="prompt" title="'+esc(it.prompt||'')+'">'+p+'</td>'
+          +'<td class="chips">'+chips(it.inputs)+'</td>'
+          +'<td class="files">'+fileList(it.files)+'</td>'
+          +'<td class="tot">'+fmtSize(it.total_size)+'</td>'
+          +'<td><a class="go" href="'+esc(it.result_url||('../r/?t='+it.ticket))+'" target="_blank" rel="noopener">open</a></td>'
+          +'</tr>';
+      }).join('');
+      document.getElementById('s-count').textContent=items.length;
+      document.getElementById('s-size').textContent=fmtSize(total);
+      document.getElementById('s-latest').textContent=items[0].created_ist||'—';
+      document.getElementById('summary').hidden=false;
+    })
+    .catch(function(){
+      document.getElementById('rows').innerHTML='<tr><td colspan="6" class="empty">No designs yet (index not created until the first build on the new format).</td></tr>';
+    });
+</script>
+</body>
+</html>

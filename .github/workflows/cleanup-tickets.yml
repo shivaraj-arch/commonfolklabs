@@ -1,9 +1,11 @@
 name: cleanup-design-tickets
 
-# Prune Design Lab result folders older than ~30 days.
+# Retention is OFF for now — results are small (SVG/text) and kept indefinitely.
+# The daily schedule is intentionally disabled; this only runs if triggered by hand.
+# FUTURE (paid/quota tier): re-enable the `schedule` cron below to prune old tickets.
 on:
-  schedule:
-    - cron: "17 3 * * *"      # daily, 03:17 UTC
+  # schedule:
+  #   - cron: "17 3 * * *"      # daily, 03:17 UTC  (disabled)
   workflow_dispatch:
 
 permissions:

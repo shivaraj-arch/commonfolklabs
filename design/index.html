@@ -212,6 +212,7 @@
 
   // Apps Script web-app URL that triggers the build (see apps-script/SETUP.md).
   var TRIGGER_URL = "https://script.google.com/macros/s/AKfycbxkb7LRCW36ugD0RdoybGklCyQ3SvrhXxFhzzqymLVEv7nALhME1GrstLUoi2av4-IDxA/exec";
+  var ENFORCE_SINGLE_JOB = false;         // FUTURE: true = one build at a time (freeze until done)
   var busy = false;                       // in-memory only: refresh/close forgets it
 
   function newTicket(){
@@ -236,11 +237,13 @@
       'frozen');
   }
   function showQueued(url){
-    setForm(true);
-    panel('<strong>Build queued.</strong> Your diagrams will appear on your result page — '
-      +'<em>bookmark it</em>; it stays live for about a month.'
-      +'<br><a class="resultlink" href="'+url+'">Open your result page →</a>'
-      +'<div class="small">One build runs at a time. Refresh this page to start another once it finishes.</div>');
+    setForm(ENFORCE_SINGLE_JOB);
+    panel('<strong>Build started.</strong> Your diagrams will appear on your result page in a few minutes — '
+      +'<em>bookmark it</em>; the link is saved and stays available.'
+      +'<br><a class="resultlink" href="'+url+'" target="_blank" rel="noopener">Open your result page →</a>'
+      +(ENFORCE_SINGLE_JOB
+        ? '<div class="small">One build runs at a time. Refresh this page to start another once it finishes.</div>'
+        : '<div class="small">You can run another design any time.</div>'));
   }
 
   async function submitDesign(e){
@@ -268,7 +271,7 @@
     }catch(_){ /* network/CORS — assume the POST reached the proxy */ }
 
     if(status==='busy'){ freeze(); return false; }
-    busy=true;
+    busy=ENFORCE_SINGLE_JOB;
     showQueued('r/?t='+encodeURIComponent(ticket));
     return false;
   }
