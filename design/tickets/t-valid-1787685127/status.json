@@ -1,0 +1,41 @@
+{
+  "ticket": "t-valid-1787685127",
+  "state": "done",
+  "reason": "",
+  "created_ist": "2026-08-26 00:44 IST",
+  "created_utc": "2026-08-25T19:14:01Z",
+  "prompt": "An 8-bit shift register with serial input, parallel output, clock and synchronous reset.",
+  "inputs": {
+    "hdl": "verilog",
+    "sim": "iverilog",
+    "synth": "yes",
+    "target": "sim"
+  },
+  "result_url": "https://commonfolklabs.com/design/r/?t=t-valid-1787685127",
+  "public": "https://commonfolklabs.com/design/tickets/t-valid-1787685127",
+  "files": [
+    {
+      "name": "design.v",
+      "size": 381,
+      "url": "https://commonfolklabs.com/design/tickets/t-valid-1787685127/design.v"
+    },
+    {
+      "name": "report.md",
+      "size": 1205,
+      "url": "https://commonfolklabs.com/design/tickets/t-valid-1787685127/report.md"
+    },
+    {
+      "name": "schematic.svg",
+      "size": 5408,
+      "url": "https://commonfolklabs.com/design/tickets/t-valid-1787685127/schematic.svg"
+    },
+    {
+      "name": "waveform.svg",
+      "size": 18091,
+      "url": "https://commonfolklabs.com/design/tickets/t-valid-1787685127/waveform.svg"
+    }
+  ],
+  "total_size": 25085,
+  "hdl": "verilog",
+  "sim": "iverilog"
+}
