@@ -73,6 +73,12 @@
   .panel .spin{display:inline-block;width:.9rem;height:.9rem;margin-right:.5rem;border:2px solid var(--line-2);border-top-color:var(--brand);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-1px}
   @keyframes sp{to{transform:rotate(360deg)}}
 
+  .runbanner{display:flex;align-items:center;gap:.6rem;margin:0 0 1.2rem;padding:.85rem 1.1rem;border:1px solid var(--brand);border-radius:.8rem;background:color-mix(in srgb,var(--brand) 10%,var(--bg-2));font-size:.92rem;font-weight:600}
+  .runbanner .spin{display:inline-block;width:1rem;height:1rem;border:2px solid color-mix(in srgb,var(--brand) 35%,transparent);border-top-color:var(--brand);border-radius:50%;animation:sp .8s linear infinite;flex:none}
+  .runbanner .rb-msg{flex:1}
+  .runbanner .rb-count{font-variant-numeric:tabular-nums;color:var(--brand);background:var(--bg);border:1px solid var(--brand);border-radius:.45rem;padding:.1rem .5rem;white-space:nowrap}
+  .harness.locked{opacity:.55}
+
   .label{font-size:.775rem;font-weight:750;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin:2.5rem 0 1.6rem;text-align:center}
   .examples{display:grid;gap:1.1rem;grid-template-columns:1fr}
   @media(min-width:44rem){.examples{grid-template-columns:repeat(2,1fr)}}
@@ -117,6 +123,12 @@
     <p class="eyebrow">Design Lab · experimental</p>
     <h1>Describe it. We simulate it.</h1>
     <p class="lede">State a digital-design requirement. The lab generates the HDL, runs it through an open-source simulator, and draws the circuit — automatically, on free CI.</p>
+  </div>
+
+  <div id="runbanner" class="runbanner" hidden>
+    <span class="spin"></span>
+    <span class="rb-msg"></span>
+    <b id="rb-count" class="rb-count">—</b>
   </div>
 
   <!-- HARNESS -->
@@ -212,8 +224,9 @@
 
   // Apps Script web-app URL that triggers the build (see apps-script/SETUP.md).
   var TRIGGER_URL = "https://script.google.com/macros/s/AKfycbxkb7LRCW36ugD0RdoybGklCyQ3SvrhXxFhzzqymLVEv7nALhME1GrstLUoi2av4-IDxA/exec";
-  var ENFORCE_SINGLE_JOB = true;          // one build at a time (freeze until done)
-  var busy = false;                       // in-memory only: refresh/close forgets it
+  var STATUS_URL = TRIGGER_URL + (TRIGGER_URL.indexOf('?')>-1?'&':'?') + 'status=1';
+  var EST_SECONDS = 300;                   // fallback estimate; the proxy may send its own
+  var watching=false, pollTimer=null, tickTimer=null, deadline=0;
 
   function newTicket(){
     var s='';
@@ -225,30 +238,75 @@
   function setForm(disabled){
     document.querySelectorAll('#harness textarea, #harness select, #harness button')
       .forEach(function(el){ el.disabled=disabled; });
+    var f=document.getElementById('harness'); if(f) f.classList.toggle('locked', disabled);
   }
   function panel(html, cls){
     var p=document.getElementById('panel');
     p.className='panel'+(cls?(' '+cls):''); p.innerHTML=html; p.hidden=false;
   }
-  function freeze(){
-    setForm(true);
-    panel('<strong>Pipeline is rate limited.</strong> The Design Lab runs one build at a time. '
-      +'Please wait until the current job finishes, then <a href="./">refresh this page</a> to submit again.',
-      'frozen');
+  function fmt(s){ s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2); }
+
+  function showBanner(startedMs, est){
+    var b=document.getElementById('runbanner');
+    b.querySelector('.rb-msg').textContent =
+      'A design is already running — please wait. Estimated time ~'+Math.max(1,Math.round(est/60))+' min:';
+    b.hidden=false;
+    function upd(){
+      var el=document.getElementById('rb-count'); if(!el) return;
+      var rem=est-(Date.now()-startedMs)/1000;
+      el.textContent = rem>0 ? fmt(rem) : 'finishing…';
+    }
+    clearInterval(tickTimer); upd(); tickTimer=setInterval(upd,1000);
   }
-  function showQueued(url){
-    setForm(ENFORCE_SINGLE_JOB);
-    panel('<strong>Build started.</strong> Your diagrams will appear on your result page in a few minutes — '
-      +'<em>bookmark it</em>; the link is saved and stays available.'
-      +'<br><a class="resultlink" href="'+url+'" target="_blank" rel="noopener">Open your result page →</a>'
-      +(ENFORCE_SINGLE_JOB
-        ? '<div class="small">One build runs at a time. Refresh this page to start another once it finishes.</div>'
-        : '<div class="small">You can run another design any time.</div>'));
+  function hideBanner(){
+    clearInterval(tickTimer); tickTimer=null;
+    var b=document.getElementById('runbanner'); if(b) b.hidden=true;
+  }
+
+  async function checkStatus(){
+    try{
+      var r=await fetch(STATUS_URL,{cache:'no-store'});
+      var d=await r.json();
+      if(d && typeof d.running==='boolean'){
+        return {supported:true, running:d.running,
+                startedMs: d.started?Date.parse(d.started):Date.now(),
+                est: d.est_seconds||EST_SECONDS};
+      }
+    }catch(_){}
+    return {supported:false, running:false, startedMs:0, est:EST_SECONDS};
+  }
+
+  function startWatch(startedMs, est, ticket){
+    watching=true;
+    setForm(true);
+    showBanner(startedMs, est);
+    deadline=startedMs+(est+240)*1000;      // safety: never freeze forever
+    clearTimeout(pollTimer);
+    (function loop(){
+      pollTimer=setTimeout(async function(){
+        var s=await checkStatus();
+        if(s.supported){                    // proxy status endpoint live -> immediate
+          if(!s.running || Date.now()>deadline){ stopWatch(); } else { loop(); }
+          return;
+        }
+        if(ticket){                         // fallback: our result file appears when done
+          try{ var rr=await fetch('tickets/'+ticket+'/status.json?cb='+Date.now(),{cache:'no-store'});
+               if(rr.ok){ stopWatch(); return; } }catch(_){}
+        }
+        if(Date.now()>deadline){ stopWatch(); } else { loop(); }
+      }, 15000);
+    })();
+  }
+  function stopWatch(){
+    watching=false;
+    clearTimeout(pollTimer); pollTimer=null;
+    hideBanner();
+    setForm(false);
   }
 
   async function submitDesign(e){
     e.preventDefault();
-    if(busy){ freeze(); return false; }
+    if(watching){ return false; }
     if(TRIGGER_URL.indexOf('PASTE_')===0){
       panel('<strong>Not configured yet.</strong> The trigger endpoint hasn’t been set. '
         +'See <code>apps-script/SETUP.md</code>.','frozen');
@@ -270,11 +328,25 @@
       catch(_){ /* response not readable (CORS) — POST was still delivered */ }
     }catch(_){ /* network/CORS — assume the POST reached the proxy */ }
 
-    if(status==='busy'){ freeze(); return false; }
-    busy=ENFORCE_SINGLE_JOB;
-    showQueued('r/?t='+encodeURIComponent(ticket));
+    if(status==='busy'){
+      var s=await checkStatus();
+      panel('<strong>Another design is already running.</strong> Your request was not queued — '
+        +'the form unlocks automatically when it finishes.','frozen');
+      startWatch(s.startedMs||Date.now(), s.est||EST_SECONDS);
+      return false;
+    }
+    panel('<strong>Build started.</strong> Your diagrams will appear on your result page in a few minutes — '
+      +'<em>bookmark it</em>; the link is saved and stays available.'
+      +'<br><a class="resultlink" href="r/?t='+encodeURIComponent(ticket)+'" target="_blank" rel="noopener">Open your result page →</a>');
+    startWatch(Date.now(), EST_SECONDS, ticket);
     return false;
   }
+
+  // On load: if a build is already running, freeze proactively with the countdown.
+  (function(){
+    if(TRIGGER_URL.indexOf('PASTE_')===0) return;
+    checkStatus().then(function(s){ if(s.supported && s.running){ startWatch(s.startedMs, s.est); } });
+  })();
 
   var DESIGNS={
     'washing-machine':{title:'Washing-machine synchronization',
