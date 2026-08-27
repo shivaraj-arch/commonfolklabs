@@ -74,6 +74,7 @@
   @keyframes sp{to{transform:rotate(360deg)}}
 
   .runbanner{display:flex;align-items:center;gap:.6rem;margin:0 0 1.2rem;padding:.85rem 1.1rem;border:1px solid var(--brand);border-radius:.8rem;background:color-mix(in srgb,var(--brand) 10%,var(--bg-2));font-size:.92rem;font-weight:600}
+  .runbanner[hidden]{display:none}
   .runbanner .spin{display:inline-block;width:1rem;height:1rem;border:2px solid color-mix(in srgb,var(--brand) 35%,transparent);border-top-color:var(--brand);border-radius:50%;animation:sp .8s linear infinite;flex:none}
   .runbanner .rb-msg{flex:1}
   .runbanner .rb-count{font-variant-numeric:tabular-nums;color:var(--brand);background:var(--bg);border:1px solid var(--brand);border-radius:.45rem;padding:.1rem .5rem;white-space:nowrap}
