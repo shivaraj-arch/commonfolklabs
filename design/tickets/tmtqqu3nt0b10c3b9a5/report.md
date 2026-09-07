@@ -1,0 +1,3 @@
+# Rejected
+
+This request is for high-voltage analog and RF electrical hardware design rather than a digital logic circuit. Please submit a request for a digital HDL module such as a counter, FSM, UART, or ALU.
