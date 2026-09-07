@@ -1,0 +1,26 @@
+{
+  "ticket": "tmtqqyqic54c20681b7",
+  "state": "rejected",
+  "reason": "This request is for an analog/high-voltage electrical engineering design (a Tesla coil) rather than a digital logic circuit. Please submit a digital logic design (e.g., counter, UART, FSM, ALU) that can be implemented in Verilog or VHDL.",
+  "created_ist": "2026-09-07 10:05 IST",
+  "created_utc": "2026-09-07T04:35:59Z",
+  "prompt": "Design a small tabletop spark-gap Tesla coil (SGTC) for education/demo, targeting\n~15\u201320 cm spark output from a 9 kV / 30 mA neon-sign-transformer supply.\n\nProduce:\n1. A block diagram of the full chain: mains \u2192 NST (HV supply) \u2192 MMC tank\n   capacitor \u2192 static spark gap \u2192 primary tank coil \u2192 secondary coil \u2192 toroid topload,\n   with RF ground.\n2. The resonant design with equations AND worked numbers: secondary inductance &\n   self-capacitance, target resonant frequency, then the matching primary LC (tank\n   cap value + primary turns) tuned to the same frequency.\n3. A component/BOM table with representative values: NST rating, MMC cap bank\n   (series/parallel, voltage rating), spark-gap geometry, secondary turns & wire\n   gauge, primary turns/spacing, toroid dimensions.\n4. Key safety notes: HV isolation, RF grounding vs mains ground, and an interlock.\n\nKeep it a single buildable ~20 cm-spark unit \u2014 not an industrial coil.",
+  "inputs": {
+    "hdl": "vhdl",
+    "sim": "ghdl",
+    "synth": "yes",
+    "target": "sim"
+  },
+  "result_url": "https://commonfolklabs.com/design/r/?t=tmtqqyqic54c20681b7",
+  "public": "https://commonfolklabs.com/design/tickets/tmtqqyqic54c20681b7",
+  "files": [
+    {
+      "name": "report.md",
+      "size": 250,
+      "url": "https://commonfolklabs.com/design/tickets/tmtqqyqic54c20681b7/report.md"
+    }
+  ],
+  "total_size": 250,
+  "hdl": "vhdl",
+  "sim": "ghdl"
+}
