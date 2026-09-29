@@ -1,5 +1,44 @@
 [
   {
+    "ticket": "tmun09l4f49ed9ed1a0",
+    "state": "done",
+    "reason": "",
+    "created_ist": "2026-09-29 23:56 IST",
+    "created_utc": "2026-09-29T18:26:28Z",
+    "prompt": "make the ram of 8 x8",
+    "inputs": {
+      "hdl": "verilog",
+      "sim": "iverilog",
+      "synth": "yes",
+      "target": "fpga"
+    },
+    "result_url": "https://commonfolklabs.com/design/r/?t=tmun09l4f49ed9ed1a0",
+    "public": "https://commonfolklabs.com/design/tickets/tmun09l4f49ed9ed1a0",
+    "files": [
+      {
+        "name": "design.v",
+        "size": 450,
+        "url": "https://commonfolklabs.com/design/tickets/tmun09l4f49ed9ed1a0/design.v"
+      },
+      {
+        "name": "report.md",
+        "size": 2093,
+        "url": "https://commonfolklabs.com/design/tickets/tmun09l4f49ed9ed1a0/report.md"
+      },
+      {
+        "name": "schematic.svg",
+        "size": 10599,
+        "url": "https://commonfolklabs.com/design/tickets/tmun09l4f49ed9ed1a0/schematic.svg"
+      },
+      {
+        "name": "waveform.svg",
+        "size": 27761,
+        "url": "https://commonfolklabs.com/design/tickets/tmun09l4f49ed9ed1a0/waveform.svg"
+      }
+    ],
+    "total_size": 40903
+  },
+  {
     "ticket": "tmtqqyqic54c20681b7",
     "state": "rejected",
     "reason": "This request is for an analog/high-voltage electrical engineering design (a Tesla coil) rather than a digital logic circuit. Please submit a digital logic design (e.g., counter, UART, FSM, ALU) that can be implemented in Verilog or VHDL.",
