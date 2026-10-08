@@ -1,5 +1,44 @@
 [
   {
+    "ticket": "tmuyvr8kv4fe20b3b96",
+    "state": "done",
+    "reason": "",
+    "created_ist": "2026-10-08 07:25 IST",
+    "created_utc": "2026-10-08T01:55:24Z",
+    "prompt": "washing machine controller",
+    "inputs": {
+      "hdl": "verilog",
+      "sim": "iverilog",
+      "synth": "yes",
+      "target": "fpga"
+    },
+    "result_url": "https://commonfolklabs.com/design/r/?t=tmuyvr8kv4fe20b3b96",
+    "public": "https://commonfolklabs.com/design/tickets/tmuyvr8kv4fe20b3b96",
+    "files": [
+      {
+        "name": "design.vhd",
+        "size": 3936,
+        "url": "https://commonfolklabs.com/design/tickets/tmuyvr8kv4fe20b3b96/design.vhd"
+      },
+      {
+        "name": "report.md",
+        "size": 645,
+        "url": "https://commonfolklabs.com/design/tickets/tmuyvr8kv4fe20b3b96/report.md"
+      },
+      {
+        "name": "schematic.svg",
+        "size": 83427,
+        "url": "https://commonfolklabs.com/design/tickets/tmuyvr8kv4fe20b3b96/schematic.svg"
+      },
+      {
+        "name": "waveform.svg",
+        "size": 8700,
+        "url": "https://commonfolklabs.com/design/tickets/tmuyvr8kv4fe20b3b96/waveform.svg"
+      }
+    ],
+    "total_size": 96708
+  },
+  {
     "ticket": "tmun09l4f49ed9ed1a0",
     "state": "done",
     "reason": "",
