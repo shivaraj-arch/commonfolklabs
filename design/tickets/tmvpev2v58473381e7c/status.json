@@ -1,0 +1,41 @@
+{
+  "ticket": "tmvpev2v58473381e7c",
+  "state": "done",
+  "reason": "",
+  "created_ist": "2026-10-26 21:07 IST",
+  "created_utc": "2026-10-26T15:37:06Z",
+  "prompt": "Design a complete, simulated digital electronics project titled:\n\nBidirectional Multi-Track Railway Crossing Interlocking and Fault Detection System Using Digital Logic ICs\n\n1. Project requirements\n\nCreate a digital logic controller for a road crossing with two parallel railway tracks. Trains may travel in either direction on either track.\n\nThe design must use digital logic ICs, not Arduino, ESP32, Raspberry Pi, or another microcontroller.\n\n2. Inputs\n\nInclude these independent digital inputs:\n\n- A and B: Track 1 train-detection sensors at opposite ends.\n- C and D: Track 2 train-detection sensors at opposite ends.\n- T1_CLEAR: Track 1 is confirmed clear.\n- T2_CLEAR: Track 2 is confirmed clear.\n- GATE_CLOSED_FB: feedback confirming the gate is closed.\n- GATE_OPEN_FB: feedback confirming the gate is open.\n- RESET: resets the controller after a fault has been addressed.\n- EMERGENCY: simulated emergency input.\n\nUse switches to represent sensors and feedback signals.\n\n3. Direction detection\n\nInfer train direction from sensor activation order:\n\n- A followed by B: Track 1, direction 1.\n- B followed by A: Track 1, direction 2.\n- C followed by D: Track 2, direction 1.\n- D followed by C: Track 2, direction 2.\n\nUse flip-flops or equivalent sequential digital logic to remember the first sensor activation and identify the second activation. Define how simultaneous activation, repeated activation, and incomplete sensor sequences are handled.\n\n4. Controller\n\nImplement a finite-state machine with these states:\n\n- IDLE\n- WARNING\n- CLOSING\n- CLOSED\n- CLEARANCE\n- REOPENING\n- FAULT\n\nThe controller must:\n\n- Start the warning indication before commanding gate closure.\n- Confirm gate closure using feedback.\n- Keep the gate closed whenever either track requires protection.\n- Never command reopening while either track is not confirmed clear.\n- Require valid gate feedback and no active fault before reopening.\n- Enter FAULT if gate feedback is inconsistent, a required transition times out, or an invalid sensor sequence is detected.\n- Require a reset after the fault condition has been investigated.\n- Give the emergency input a defined, documented behavior that does not create an unsafe reopening command.\n\n5. Outputs\n\nInclude:\n\n- Red road STOP LED.\n- Green road GO LED.\n- Yellow warning LED.\n- Gate-close command LED.\n- Gate-open command LED.\n- Gate-closed feedback LED.\n- Fault LED.\n- Separate Track 1 and Track 2 activity LEDs.\n- Four direction-indicator LEDs.\n- Optional buzzer.\n- Seven-segment display for the current state or a fault code.\n\n6. Component constraints\n\nPrefer standard 74HC-series digital ICs:\n\n- 74HC08 AND gates.\n- 74HC32 OR gates.\n- 74HC04 inverters.\n- 74HC00 NAND gates.\n- 74HC86 XOR gates.\n- 74HC74 D flip-flops.\n- Suitable counters, timers, and display-driver ICs where necessary.\n\nUse a 5 V logic supply and appropriate current-limiting resistors. Include power, ground, reset circuitry, and required decoupling capacitors.\n\nAvoid using components that are unavailable in the intended simulator.\n\n7. Required deliverables\n\nGenerate as much of the following as the tool supports:\n\n1. A complete circuit schematic with identifiable ICs and labelled signals.\n2. A finite-state-machine diagram and state-transition table.\n3. Boolean equations for the combinational logic.\n4. A complete bill of materials with component quantities.\n5. Exact IC pin-to-pin wiring and power connections.\n6. A simulation that can be run, with input sequences and expected outputs.\n7. Test cases covering both directions on both tracks, overlapping trains, gate-feedback failure, timeout, reset, and conflicting sensor inputs.\n8. Any HDL source code, simulation files, or editable schematic files the tool can export.\n\nDo not invent successful simulation results. If any part cannot be generated or verified, clearly identify it.\n\nImportant: This is an academic simulator project, not a real railway safety controller. Do not claim that the design is suitable for real railway operation.",
+  "inputs": {
+    "hdl": "verilog",
+    "sim": "iverilog",
+    "synth": "yes",
+    "target": "sim"
+  },
+  "result_url": "https://commonfolklabs.com/design/r/?t=tmvpev2v58473381e7c",
+  "public": "https://commonfolklabs.com/design/tickets/tmvpev2v58473381e7c",
+  "files": [
+    {
+      "name": "design.v",
+      "size": 9729,
+      "url": "https://commonfolklabs.com/design/tickets/tmvpev2v58473381e7c/design.v"
+    },
+    {
+      "name": "report.md",
+      "size": 2087,
+      "url": "https://commonfolklabs.com/design/tickets/tmvpev2v58473381e7c/report.md"
+    },
+    {
+      "name": "schematic.svg",
+      "size": 248737,
+      "url": "https://commonfolklabs.com/design/tickets/tmvpev2v58473381e7c/schematic.svg"
+    },
+    {
+      "name": "waveform.svg",
+      "size": 66941,
+      "url": "https://commonfolklabs.com/design/tickets/tmvpev2v58473381e7c/waveform.svg"
+    }
+  ],
+  "total_size": 327494,
+  "hdl": "verilog",
+  "sim": "iverilog"
+}
